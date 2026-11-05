@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#081321">
+<meta name="description" content="Material educativo sobre topologías de redes informáticas: árbol, punto a punto, híbrida e inalámbrica.">
+<title>Topologías de redes | Redes informáticas</title>
+<style>
+:root{
+  --bg:#081321;--surface:#101f32;--surface-2:#142840;--surface-3:#0b1929;
+  --line:#263e58;--text:#edf4fb;--muted:#afc0d2;--cyan:#54d9f2;
+  --blue:#238bb8;--accent-soft:rgba(84,217,242,.11);
+  --radius:18px;--max:1120px;--shadow:0 18px 48px rgba(0,0,0,.22)
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:90px}
+body{font-family:Inter,Arial,sans-serif;background:var(--bg);color:var(--text);line-height:1.7}
+a{color:inherit}
+.skip-link{position:absolute;left:-999px;top:8px;background:white;color:#081321;padding:10px 14px;z-index:100}
+.skip-link:focus{left:8px}
+.site-header{background:linear-gradient(120deg,#102b47,#0b1b2d);border-bottom:1px solid var(--line)}
+.header-inner{max-width:var(--max);margin:auto;padding:18px 24px;display:flex;align-items:center;justify-content:space-between;gap:20px}
+.brand{font-weight:800;letter-spacing:.12em;color:var(--cyan);font-size:.9rem}
+.header-note{color:var(--muted);font-size:.88rem}
+nav{position:sticky;top:0;z-index:20;background:rgba(8,19,33,.94);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.nav-inner{max-width:var(--max);margin:auto;padding:0 18px;display:flex;gap:6px;overflow-x:auto;scrollbar-width:thin}
+nav a{display:block;white-space:nowrap;text-decoration:none;color:var(--muted);padding:15px 13px;font-size:.9rem;font-weight:650;border-bottom:2px solid transparent}
+nav a:hover,nav a:focus-visible{color:var(--cyan);border-color:var(--cyan);outline:none}
+.hero{position:relative;overflow:hidden;background:radial-gradient(ellipse at 80% 35%,rgba(35,139,184,.24),transparent 42%),linear-gradient(135deg,#102b47,#081321 72%);border-bottom:1px solid var(--line)}
+.hero-inner{max-width:var(--max);min-height:390px;margin:auto;padding:76px 24px;display:grid;grid-template-columns:1.25fr .75fr;align-items:center;gap:40px}
+.eyebrow{color:var(--cyan);font-weight:800;letter-spacing:.16em;text-transform:uppercase;font-size:.75rem}
+.hero h1{font-size:clamp(2.3rem,5vw,4.2rem);line-height:1.08;letter-spacing:-.04em;margin:14px 0 20px;max-width:720px}
+.hero p{color:#c4d4e4;font-size:1.08rem;max-width:650px}
+.actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:28px}
+.button{display:inline-block;text-decoration:none;padding:11px 18px;border-radius:10px;font-weight:750;border:1px solid var(--cyan);background:var(--cyan);color:#061522;transition:.2s}
+.button.secondary{background:transparent;color:var(--text);border-color:#49657f}
+.button:hover{transform:translateY(-2px);filter:brightness(1.08)}
+.hero-art{width:100%;max-width:350px;justify-self:center;filter:drop-shadow(0 14px 28px rgba(0,0,0,.25))}
+main{max-width:var(--max);margin:auto;padding:0 24px 70px}
+section{padding:68px 0 10px}
+.section-heading{text-align:center;max-width:760px;margin:0 auto 34px}
+.kicker{color:var(--cyan);font-size:.76rem;text-transform:uppercase;letter-spacing:.14em;font-weight:800}
+h2.section-title{font-size:clamp(1.8rem,3vw,2.5rem);line-height:1.2;margin:8px 0 12px}
+.section-heading p,.lead{color:var(--muted)}
+.intro-grid{display:grid;grid-template-columns:1.35fr .65fr;gap:20px;align-items:stretch}
+.panel,.info-card,.topology-card,.diagram-wrap,.comparison-wrap{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius)}
+.panel{padding:28px}
+.panel p+p{margin-top:12px}
+.definition{border-left:3px solid var(--cyan);background:var(--accent-soft);padding:20px;border-radius:0 14px 14px 0;color:#d8e8f5}
+.info-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:20px}
+.info-card{padding:20px}
+.info-card .icon{font-size:1.35rem;color:var(--cyan)}
+.info-card h3{font-size:1rem;margin:8px 0 5px}
+.info-card p{font-size:.92rem;color:var(--muted)}
+.topology-card{padding:clamp(20px,4vw,36px);margin:24px 0;box-shadow:var(--shadow)}
+.topology-head{display:flex;align-items:flex-start;gap:16px;margin-bottom:14px}
+.number{flex:0 0 42px;height:42px;border-radius:12px;display:grid;place-items:center;background:var(--accent-soft);border:1px solid rgba(84,217,242,.3);color:var(--cyan);font-weight:850}
+.topology-head h2{font-size:clamp(1.45rem,3vw,2rem);line-height:1.25}
+.topology-head p{color:var(--muted);margin-top:5px}
+.diagram-wrap{padding:18px;margin:24px 0;background:var(--surface-3)}
+.diagram-title{font-size:.82rem;text-transform:uppercase;letter-spacing:.1em;color:var(--cyan);margin:0 0 12px}
+svg.diagram{display:block;width:100%;height:auto;max-height:340px}
+.node{fill:#163d5b;stroke:#54d9f2;stroke-width:2}
+.node.main{fill:#08799d;stroke:#9aefff}
+.edge{stroke:#54d9f2;stroke-width:3;fill:none;stroke-linecap:round}
+.edge.secondary{stroke:#66839d;stroke-dasharray:6 6}
+.svg-label{fill:#f3f8fc;font:600 14px Arial,sans-serif;text-anchor:middle}
+.svg-small{fill:#afc0d2;font:12px Arial,sans-serif;text-anchor:middle}
+.detail-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:22px}
+.detail{padding:18px;background:var(--surface-2);border-radius:13px;border:1px solid #203a54}
+.detail h3{font-size:1rem;color:var(--cyan);margin-bottom:9px}
+.detail ul{padding-left:18px;color:#d0deea}
+.detail li{padding:3px 0}
+.example{margin-top:18px;padding:17px 20px;border-radius:12px;background:var(--accent-soft);border:1px solid rgba(84,217,242,.2);color:#d8e8f5}
+.example strong{color:var(--cyan)}
+.note{margin-top:14px;color:var(--muted);font-size:.9rem}
+.comparison-wrap{overflow-x:auto;margin-top:22px}
+table{width:100%;border-collapse:collapse;min-width:620px}
+th,td{text-align:left;padding:15px 17px;border-bottom:1px solid var(--line);vertical-align:top}
+th{color:var(--cyan);background:var(--surface-2);font-size:.9rem}
+td{color:#d1deea;font-size:.92rem}
+tr:last-child td{border-bottom:0}
+.conclusion{padding:26px;background:linear-gradient(130deg,#12334e,#102238);border:1px solid #28516b;border-radius:var(--radius);margin-top:24px}
+.conclusion h3{color:var(--cyan);margin-bottom:8px}
+footer{border-top:1px solid var(--line);background:#050d17;text-align:center;padding:32px 20px;color:var(--muted)}
+footer strong{display:block;color:var(--cyan);letter-spacing:.12em;margin-bottom:6px}
+.back-top{position:fixed;right:22px;bottom:22px;width:46px;height:46px;border-radius:50%;display:grid;place-items:center;background:var(--cyan);color:#061522;text-decoration:none;font-size:1.35rem;font-weight:900;box-shadow:0 8px 24px #0006;opacity:0;pointer-events:none;transform:translateY(8px);transition:.2s;z-index:30}
+.back-top.visible{opacity:1;pointer-events:auto;transform:translateY(0)}
+:focus-visible{outline:3px solid #fff;outline-offset:3px}
+@media(max-width:760px){
+ .hero-inner{grid-template-columns:1fr;padding:58px 22px;min-height:auto}
+ .hero-art{max-width:230px;grid-row:1}
+ .intro-grid{grid-template-columns:1fr}
+ .info-grid,.detail-grid{grid-template-columns:1fr}
+ section{padding-top:52px}
+ .header-note{display:none}
+}
+@media(prefers-reduced-motion:reduce){
+ html{scroll-behavior:auto}
+ *,*::before,*::after{transition:none!important;animation:none!important}
+}
+</style>
+</head>
+<body>
+<a class="skip-link" href="#contenido">Saltar al contenido</a>
+<header class="site-header" id="inicio">
+ <div class="header-inner"><div class="brand">REDES INFORMÁTICAS</div><div class="header-note">Material de estudio · Topologías de red</div></div>
+</header>
+<nav aria-label="Navegación principal">
+ <div class="nav-inner">
+  <a href="#inicio">Inicio</a><a href="#introduccion">Introducción</a><a href="#arbol">Árbol</a><a href="#punto">Punto a punto</a><a href="#hibrida">Híbrida</a><a href="#inalambrica">Inalámbrica</a><a href="#comparacion">Comparación</a><a href="#conclusion">Conclusión</a>
+ </div>
+</nav>
+<div class="hero">
+ <div class="hero-inner">
+  <div>
+   <div class="eyebrow">Conceptos fundamentales</div>
+   <h1>Topologías de redes</h1>
+   <p>Cómo se organizan las conexiones entre dispositivos, qué características tiene cada estructura y en qué situaciones puede utilizarse.</p>
+   <div class="actions"><a class="button" href="#introduccion">Explorar el contenido</a><a class="button secondary" href="#comparacion">Ver comparación</a></div>
+  </div>
+  <svg class="hero-art" viewBox="0 0 340 250" role="img" aria-label="Ilustración de dispositivos conectados en una red">
+   <g stroke="#54d9f2" stroke-width="3" fill="none" opacity=".8"><path d="M170 62L75 150M170 62L265 150M75 150L170 208M265 150L170 208M75 150L265 150"/></g>
+   <g fill="#123d60" stroke="#54d9f2" stroke-width="2"><rect x="125" y="28" width="90" height="55" rx="12"/><rect x="30" y="125" width="90" height="50" rx="10"/><rect x="220" y="125" width="90" height="50" rx="10"/><rect x="125" y="182" width="90" height="50" rx="10"/></g>
+   <g fill="#f3f8fc" font-family="Arial" font-size="12" font-weight="bold" text-anchor="middle"><text x="170" y="60">ROUTER</text><text x="75" y="155">PC 01</text><text x="265" y="155">PC 02</text><text x="170" y="212">SERVIDOR</text></g>
+  </svg>
+ </div>
+</div>
+<main id="contenido">
+<section id="introduccion">
+ <div class="section-heading"><div class="kicker">01 · Introducción</div><h2 class="section-title">¿Qué son las topologías de red?</h2><p>Una forma de entender cómo se conectan y se comunican los equipos de una red informática.</p></div>
+ <div class="intro-grid">
+  <div class="panel"><p>Las topologías de red describen la forma en que se organizan y conectan los dispositivos dentro de una red informática. Esta organización permite establecer cómo se comunican computadoras, routers, switches y otros equipos para compartir información y recursos.</p><p>La estructura elegida influye en la instalación, la administración, la ampliación y la tolerancia a fallas de la red.</p></div>
+  <div class="definition"><strong>Idea clave</strong><br>Una topología representa la disposición de las conexiones entre los dispositivos. Puede describirse desde su estructura física —cómo están conectados— o lógica —cómo circulan los datos—.</div>
+ </div>
+ <div class="info-grid">
+  <article class="info-card"><div class="icon">▣</div><h3>Dispositivos</h3><p>Computadoras, celulares, impresoras, servidores y otros equipos que participan en la red.</p></article>
+  <article class="info-card"><div class="icon">⌁</div><h3>Conexiones</h3><p>Medios cableados o inalámbricos que permiten transmitir datos entre los dispositivos.</p></article>
+  <article class="info-card"><div class="icon">↔</div><h3>Comunicación</h3><p>Intercambio de información y recursos entre los equipos conectados.</p></article>
+ </div>
+</section>
+
+<section id="arbol">
+ <article class="topology-card">
+  <div class="topology-head"><div class="number">01</div><div><h2>Topología de árbol</h2><p>Una estructura jerárquica organizada en niveles y ramas.</p></div></div>
+  <p>La topología de árbol organiza los dispositivos de manera jerárquica. Tiene una estructura similar a un árbol: desde un nodo principal se distribuyen conexiones hacia otros nodos, que pueden formar nuevas ramas.</p>
+  <div class="diagram-wrap"><div class="diagram-title">Esquema de conexión</div>
+   <svg class="diagram" viewBox="0 0 600 300" role="img" aria-label="Un router conectado a dos switches y cuatro computadoras">
+    <path class="edge" d="M300 65V112L150 170M300 112L450 170M150 210L80 250M150 210L220 250M450 210L380 250M450 210L520 250"/>
+    <rect class="node main" x="240" y="20" width="120" height="45" rx="8"/><text class="svg-label" x="300" y="48">Router</text>
+    <rect class="node" x="95" y="170" width="110" height="40" rx="7"/><text class="svg-label" x="150" y="195">Switch 1</text>
+    <rect class="node" x="395" y="170" width="110" height="40" rx="7"/><text class="svg-label" x="450" y="195">Switch 2</text>
+    <g><rect class="node" x="35" y="250" width="90" height="38" rx="7"/><text class="svg-label" x="80" y="274">PC 1</text><rect class="node" x="175" y="250" width="90" height="38" rx="7"/><text class="svg-label" x="220" y="274">PC 2</text><rect class="node" x="335" y="250" width="90" height="38" rx="7"/><text class="svg-label" x="380" y="274">PC 3</text><rect class="node" x="475" y="250" width="90" height="38" rx="7"/><text class="svg-label" x="520" y="274">PC 4</text></g>
+   </svg>
+  </div>
+  <div class="detail-grid">
+   <div class="detail"><h3>Características</h3><ul><li>Presenta una estructura jerárquica.</li><li>Se organiza mediante nodos y ramas.</li><li>Permite conectar numerosos dispositivos.</li><li>Facilita la división por sectores.</li></ul></div>
+   <div class="detail"><h3>Ventajas</h3><ul><li>Es relativamente fácil ampliar la red.</li><li>Permite organizar equipos por áreas.</li><li>Facilita la administración.</li></ul></div>
+   <div class="detail"><h3>Desventajas</h3><ul><li>Puede requerir mucho cableado.</li><li>La instalación puede ser costosa.</li><li>Una falla en un nodo principal puede afectar las ramas que dependen de él.</li></ul></div>
+  </div>
+  <div class="example"><strong>Ejemplo de uso:</strong> empresas, instituciones educativas y edificios con diferentes departamentos o sectores.</div>
+ </article>
+</section>
+
+<section id="punto">
+ <article class="topology-card">
+  <div class="topology-head"><div class="number">02</div><div><h2>Topología punto a punto</h2><p>Un enlace directo entre dos dispositivos.</p></div></div>
+  <p>La topología punto a punto establece una conexión directa entre dos dispositivos. El enlace se utiliza para comunicar esos dos extremos, sin que sea necesario compartirlo con otros equipos.</p>
+  <div class="diagram-wrap"><div class="diagram-title">Esquema de conexión</div>
+   <svg class="diagram" viewBox="0 0 600 180" role="img" aria-label="Dos computadoras conectadas directamente">
+    <path class="edge" d="M200 90H400"/><rect class="node" x="70" y="55" width="130" height="70" rx="8"/><text class="svg-label" x="135" y="95">PC 1</text><rect class="node" x="400" y="55" width="130" height="70" rx="8"/><text class="svg-label" x="465" y="95">PC 2</text><text class="svg-small" x="300" y="75">Enlace directo</text>
+   </svg>
+  </div>
+  <div class="detail-grid">
+   <div class="detail"><h3>Características</h3><ul><li>Conecta directamente dos dispositivos.</li><li>Utiliza un enlace entre ambos extremos.</li><li>Su estructura es sencilla.</li><li>Permite una comunicación directa.</li></ul></div>
+   <div class="detail"><h3>Ventajas</h3><ul><li>Instalación sencilla.</li><li>Comunicación directa.</li><li>Fácil identificación de los extremos.</li></ul></div>
+   <div class="detail"><h3>Desventajas</h3><ul><li>El enlace conecta solamente dos extremos.</li><li>Si se interrumpe, se pierde esa comunicación.</li><li>No resulta suficiente por sí solo para redes grandes.</li></ul></div>
+  </div>
+  <div class="example"><strong>Ejemplo de uso:</strong> enlaces dedicados entre dos equipos de red o conexiones directas entre dispositivos.</div>
+ </article>
+</section>
+
+<section id="hibrida">
+ <article class="topology-card">
+  <div class="topology-head"><div class="number">03</div><div><h2>Topología híbrida</h2><p>La combinación de dos o más topologías.</p></div></div>
+  <p>La topología híbrida combina dos o más tipos de topologías de red. Esto permite adaptar diferentes sectores de una misma red a necesidades específicas.</p>
+  <p class="note">En el ejemplo se combinan segmentos en anillo con conexiones en estrella: los equipos de cada sector se conectan a un switch y los switches forman un circuito entre sí.</p>
+  <div class="diagram-wrap"><div class="diagram-title">Esquema conceptual: anillo de switches y equipos en estrella</div>
+   <svg class="diagram" viewBox="0 0 600 340" role="img" aria-label="Dos switches conectados en anillo y cada uno conectado a dos computadoras en estrella">
+    <path class="edge" d="M200 75H400V155H200Z"/>
+    <rect class="node main" x="145" y="55" width="110" height="42" rx="7"/><text class="svg-label" x="200" y="81">Switch 1</text>
+    <rect class="node main" x="345" y="55" width="110" height="42" rx="7"/><text class="svg-label" x="400" y="81">Switch 2</text>
+    <path class="edge" d="M200 97V210L110 265M200 210L290 265M400 97V210L310 265M400 210L490 265"/>
+    <g><rect class="node" x="65" y="265" width="90" height="40" rx="7"/><text class="svg-label" x="110" y="290">PC 1</text><rect class="node" x="245" y="265" width="90" height="40" rx="7"/><text class="svg-label" x="290" y="290">PC 2</text><rect class="node" x="265" y="265" width="90" height="40" rx="7"/><text class="svg-label" x="310" y="290">PC 3</text><rect class="node" x="445" y="265" width="90" height="40" rx="7"/><text class="svg-label" x="490" y="290">PC 4</text></g>
+    <text class="svg-small" x="300" y="185">Enlace entre sectores</text>
+   </svg>
+  </div>
+  <div class="detail-grid">
+   <div class="detail"><h3>Características</h3><ul><li>Combina dos o más topologías.</li><li>Se adapta a diferentes necesidades.</li><li>Integra sectores con distintas estructuras.</li><li>Su diseño depende de la red.</li></ul></div>
+   <div class="detail"><h3>Ventajas</h3><ul><li>Gran flexibilidad.</li><li>Permite adaptar cada sector.</li><li>Facilita ampliaciones planificadas.</li></ul></div>
+   <div class="detail"><h3>Desventajas</h3><ul><li>Puede tener un costo elevado.</li><li>Su diseño es más complejo.</li><li>Necesita planificación y administración.</li></ul></div>
+  </div>
+  <div class="example"><strong>Ejemplo de uso:</strong> empresas, universidades y organizaciones que necesitan integrar sectores con diferentes estructuras de conexión.</div>
+ </article>
+</section>
+
+<section id="inalambrica">
+ <article class="topology-card">
+  <div class="topology-head"><div class="number">04</div><div><h2>Red inalámbrica</h2><p>Comunicación mediante ondas de radio.</p></div></div>
+  <p>Una red inalámbrica permite conectar dispositivos mediante ondas de radio, sin necesitar un cable para cada conexión. Es habitual en hogares, escuelas y oficinas.</p>
+  <p>En el modo infraestructura, los dispositivos se comunican a través de un punto de acceso central. En muchos hogares, ese punto de acceso está integrado en el router Wi-Fi.</p>
+  <div class="diagram-wrap"><div class="diagram-title">Esquema de conexión en modo infraestructura</div>
+   <svg class="diagram" viewBox="0 0 600 280" role="img" aria-label="Router Wi-Fi conectado inalámbricamente a una notebook, un celular y una tablet">
+    <path class="edge secondary" d="M300 105L120 205M300 105V205M300 105L480 205"/>
+    <rect class="node main" x="225" y="40" width="150" height="65" rx="10"/><text class="svg-label" x="300" y="70">Router Wi-Fi</text><text class="svg-small" x="300" y="90">Punto de acceso</text>
+    <rect class="node" x="65" y="205" width="110" height="55" rx="8"/><text class="svg-label" x="120" y="238">Notebook</text><rect class="node" x="245" y="205" width="110" height="55" rx="8"/><text class="svg-label" x="300" y="238">Celular</text><rect class="node" x="425" y="205" width="110" height="55" rx="8"/><text class="svg-label" x="480" y="238">Tablet</text>
+   </svg>
+  </div>
+  <div class="detail-grid">
+   <div class="detail"><h3>Características</h3><ul><li>Utiliza ondas de radio.</li><li>No necesita cables para cada dispositivo.</li><li>Permite movilidad dentro del área de cobertura.</li><li>Puede utilizar un punto de acceso central.</li></ul></div>
+   <div class="detail"><h3>Ventajas</h3><ul><li>Instalación flexible.</li><li>Movilidad de los dispositivos.</li><li>Menor necesidad de cableado.</li><li>Conexión de distintos equipos.</li></ul></div>
+   <div class="detail"><h3>Desventajas</h3><ul><li>La distancia puede afectar la señal.</li><li>Las paredes pueden reducir la cobertura.</li><li>Puede sufrir interferencias.</li></ul></div>
+  </div>
+  <div class="example"><strong>Ejemplo de uso:</strong> hogares, escuelas, oficinas, bibliotecas y espacios públicos con conexión Wi-Fi.</div>
+  <p class="note">Precisión conceptual: “inalámbrica” describe el medio de transmisión y la forma de acceso. La red también puede tener una disposición lógica o física determinada, como estrella en el modo infraestructura.</p>
+ </article>
+</section>
+
+<section id="comparacion">
+ <div class="section-heading"><div class="kicker">Síntesis</div><h2 class="section-title">Comparación de topologías</h2><p>Un repaso de las diferencias principales entre las cuatro estructuras.</p></div>
+ <div class="comparison-wrap"><table>
+  <thead><tr><th>Tipo</th><th>Organización</th><th>Ventaja principal</th><th>Limitación principal</th></tr></thead>
+  <tbody>
+   <tr><td><strong>Árbol</strong></td><td>Jerárquica, por ramas.</td><td>Organización y ampliación por sectores.</td><td>Dependencia de nodos superiores.</td></tr>
+   <tr><td><strong>Punto a punto</strong></td><td>Enlace directo entre dos extremos.</td><td>Simplicidad de conexión.</td><td>Conecta solamente dos extremos por enlace.</td></tr>
+   <tr><td><strong>Híbrida</strong></td><td>Combinación de topologías.</td><td>Flexibilidad de diseño.</td><td>Mayor complejidad de planificación.</td></tr>
+   <tr><td><strong>Inalámbrica</strong></td><td>Transmisión por ondas de radio.</td><td>Movilidad y menor cableado.</td><td>Interferencias y límites de cobertura.</td></tr>
+  </tbody>
+ </table></div>
+</section>
+
+<section id="conclusion">
+ <div class="section-heading"><div class="kicker">Cierre</div><h2 class="section-title">Conclusión</h2></div>
+ <div class="conclusion"><h3>¿Por qué son importantes?</h3><p>Las topologías permiten organizar la comunicación entre diferentes dispositivos. Cada una presenta características, ventajas y desventajas. La elección depende de las necesidades, el presupuesto, el tamaño y la organización de la red. Conocerlas ayuda a comprender cómo funcionan las redes informáticas que utilizamos todos los días.</p></div>
+</section>
+</main>
+<footer><strong>REDES INFORMÁTICAS</strong><p>Proyecto educativo · Muestra escolar</p><p>Conectando conocimientos con tecnología · 2026</p></footer>
+<a class="back-top" id="backTop" href="#inicio" aria-label="Volver al inicio">↑</a>
+<script>
+const backTop=document.getElementById('backTop');
+const updateBackTop=()=>backTop.classList.toggle('visible',window.scrollY>420);
+window.addEventListener('scroll',updateBackTop,{passive:true});
+updateBackTop();
+</script>
+</body>
+</html>
